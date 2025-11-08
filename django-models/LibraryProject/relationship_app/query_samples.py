@@ -12,6 +12,6 @@ books = library.books.all()
 
 # Retrieve the librarian for a library.
 
-librarian = Library.objects.get(library__name="Central Library")
+librarian = Library.objects.get(name=library_name)
 print(f"Librarian: {librarian.name}")
 
