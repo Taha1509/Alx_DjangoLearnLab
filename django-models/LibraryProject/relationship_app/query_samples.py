@@ -2,7 +2,7 @@
 
 # Query all books by a specific author.
 
-author = Author.objects.get(name="J.K. Rowling") 
+author = Author.objects.get(name=author_name)
 books_by_author = Book.objects.filter(author=author) 
 
 # List all books in a library.
