@@ -43,14 +43,13 @@ class Librarian(models.Model):
     
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email,profile_photo, password=None, **extra_fields):
+    def create_user(self, username, email, password=None, **extra_fields):
         # Validate required fields
         if not email:
             raise ValueError('The Email field must be set')
         if not username:
             raise ValueError('The Username field must be set')
-        if not profile_photo:
-            raise ValueError ('The profile_photo field must be set')
+
         # Normalize email
         email = self.normalize_email(email)
         
@@ -89,8 +88,8 @@ class CustomUser(AbstractUser):
         ('Member', 'Member'),
     ]
     
-    DateOfBirth = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profiles/', blank=True)
+    date_of_birth = models.DateField(null=True, blank=True)
+    profile_photo = models.ImageField(upload_to='profiles/', blank=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Member')
 
     objects = CustomUserManager()
