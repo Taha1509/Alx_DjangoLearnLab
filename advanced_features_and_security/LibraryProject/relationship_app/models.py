@@ -43,13 +43,14 @@ class Librarian(models.Model):
     
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, **extra_fields):
+    def create_user(self, username, email,profile_photo, password=None, **extra_fields):
         # Validate required fields
         if not email:
             raise ValueError('The Email field must be set')
         if not username:
             raise ValueError('The Username field must be set')
-        
+        if not profile_photo:
+            raise ValueError ('The profile_photo field must be set')
         # Normalize email
         email = self.normalize_email(email)
         
@@ -80,7 +81,7 @@ class CustomUserManager(BaseUserManager):
         # Create superuser
         return self.create_user(username, email, password, **extra_fields)
     
-    
+
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
         ('Admin', 'Admin'),
