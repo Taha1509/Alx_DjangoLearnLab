@@ -46,7 +46,7 @@ class CustomUser(AbstractUser):
     ]
     
     date_of_birth = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profiles/', blank=True)
+    profile_photo = models.ImageField(upload_to='profiles/', blank=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Member')
 
     def __str__(self):
