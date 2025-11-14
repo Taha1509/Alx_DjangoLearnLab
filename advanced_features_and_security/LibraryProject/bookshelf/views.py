@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.db.models import Q
 from .models import Book, Author
 from .forms import BookForm, AuthorForm
+from .forms import ExampleForm
 
 # Create your views here.
 @permission_required('bookshelf.can_view', raise_exception=True)
