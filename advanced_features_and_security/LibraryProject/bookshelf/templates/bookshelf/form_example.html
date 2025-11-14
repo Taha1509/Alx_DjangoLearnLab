@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example Form</title>
+    <style>
+        .error { color: red; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input, textarea { width: 100%; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Example Form</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_name">Name:</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+                <div class="error">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_message">Message:</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+                <div class="error">{{ form.message.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if submitted %}
+        <div style="margin-top: 20px; padding: 10px; background: #e8f5e8; border: 1px solid #4caf50;">
+            <h3>Form Submitted Successfully!</h3>
+            <p><strong>Name:</strong> {{ form_data.name }}</p>
+            <p><strong>Email:</strong> {{ form_data.email }}</p>
+            <p><strong>Message:</strong> {{ form_data.message }}</p>
+        </div>
+    {% endif %}
+</body>
+</html>
