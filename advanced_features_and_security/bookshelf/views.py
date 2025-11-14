@@ -12,81 +12,18 @@ from django.contrib.auth.decorators import user_passes_test, login_required, use
 from django.shortcuts import render
 from .forms import BookForm
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.decorators import permission_required, login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book
-from .forms import BookForm
-
-
-"""
-PERMISSIONS AND GROUPS SETUP GUIDE
-===================================
-
-1. CUSTOM PERMISSIONS (models.py):
-   - Added to Book model: can_view, can_create, can_edit, can_delete
-   - These control access to book-related operations
-
-2. GROUPS CONFIGURATION (Django Admin):
-   - Viewers Group: can_view permission only
-   - Editors Group: can_view, can_create, can_edit permissions  
-   - Admins Group: All permissions (can_view, can_create, can_edit, can_delete)
-
-3. PROTECTED VIEWS (views.py):
-   - /books/ (book_list): requires 'bookshelf.can_view'
-   - /books/create/ (book_create): requires 'bookshelf.can_create'
-   - /books/<id>/edit/ (book_edit): requires 'bookshelf.can_edit' 
-   - /books/<id>/delete/ (book_delete): requires 'bookshelf.can_delete'
-
-4. TESTING:
-   - Create users and assign to groups in Django Admin
-   - Login as each user type to verify permissions work correctly
-   - Viewers: Can only list books
-   - Editors: Can list, create, and edit books
-   - Admins: Full access to all book operations
-"""
 
 # Create your views here.
-@permission_required('bookshelf.can_view', raise_exception=True)
 
 def List_All_Books(request):
     books = Book.objects.all()  
     context = {'books': books}  
     return render(request, 'relationship_app/list_books.html', context)  
 
-@permission_required('bookshelf.can_create', raise_exception=True)
-def book_create(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('book_list')
-    else:
-        form = BookForm()
-    return render(request, 'bookshelf/book_form.html', {'form': form})
-
 class LibraryDetailView(DetailView): 
     model = Library
     template_name = 'relationship_app/library_detail.html'  
 
-@permission_required('bookshelf.can_edit', raise_exception=True)
-def book_edit(request, book_id):
-    book = get_object_or_404(Book, id=book_id)
-    if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect('book_list')
-    else:
-        form = BookForm(instance=book)
-    return render(request, 'bookshelf/book_form.html', {'form': form})
-
-@permission_required('bookshelf.can_delete', raise_exception=True)
-def book_delete(request, book_id):
-    book = get_object_or_404(Book, id=book_id)
-    if request.method == 'POST':
-        book.delete()
-        return redirect('book_list')
-    return render(request, 'bookshelf/book_confirm_delete.html', {'book': book})
 
 class RegisterView(CreateView):
     form_class = UserCreationForm

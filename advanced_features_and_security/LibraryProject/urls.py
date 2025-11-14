@@ -28,6 +28,10 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('relationship/', include('relationship_app.urls')),
+    path('books/', book_list, name='book_list'),
+    path('books/create/', book_create, name='book_create'),
+    path('books/<int:book_id>/edit/', book_edit, name='book_edit'),
+    path('books/<int:book_id>/delete/', book_delete, name='book_delete'),
 ]
 
 
