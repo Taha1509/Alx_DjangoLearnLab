@@ -32,8 +32,8 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [permissions.AllowAny]
     filter_backends = [filters.OrderingFilter] 
+    search_fields = [filters.SearchFilter]
 
-    
     # Step 1: Filtering Backend
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     
