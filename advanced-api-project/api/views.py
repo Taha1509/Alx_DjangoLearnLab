@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, filters  
 from .models import Book, Author
 from .serializers import BookSerializer, AuthorSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -31,6 +31,8 @@ class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.OrderingFilter] 
+
     
     # Step 1: Filtering Backend
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
