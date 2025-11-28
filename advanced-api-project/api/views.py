@@ -3,7 +3,7 @@ from .models import Book, Author
 from .serializers import BookSerializer, AuthorSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import generics, permissions
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 # Create your views here.
 
 class BookListView(generics.ListAPIView):
